@@ -1,75 +1,130 @@
 module.exports = function(app, request) {
 
-// Global variable for response object
-var resJson = [];
-var microserviceBaseUrl = "http://localhost:3000";
+	var resJson = [];
+	var microserviceBaseUrl = "http://localhost:8080/micro";
 
-// get list of sample documents
-app.get('/api/items/mock',function(req, res){
+//	validation check
+	app.get('/api/items/validate',function(req, res){
+		return res.send("validation successful!");
+	});
 
-	var mockData = [
-			{
-				"description": "Punched-card tabulating machines and time clocks were not the only products offered by the young IBM. Seen here in 1930, manufacturing employees of IBM's Dayton Scale Company are assembling Dayton Safety Electric Meat Choppers. These devices, which won the Gold Medal at the 1926 Sesquicentennial International Exposition in Philadelphia, were produced in both counter base and pedestal styles (5000 and 6000 series, respectively). They included one-quarter horsepower models, one-third horsepower machines (Styles 5113, 6113F and 6213F), one-half horsepower types (Styles 5117, 6117F and 6217F) and one horsepower choppers (Styles 5128, 6128F and 6228F). Prices in 1926 varied from $180 to $375. Three years after this photograph was taken, the Dayton Scale Company became an IBM division, and was sold to the Hobart Manufacturing Company in 1934.",
-				"id": 13401,
-				"img": "api/containers/items/download/meat-chopper.jpg",
-				"img_alt": "Dayton Meat Chopper",
-				"name": "Dayton Meat Chopper",
-				"price": 4599.99,
-				"rating": 0
+//	get list of items in inventory
+	app.get('/api/items',function(req, res){
+
+		var endPoint = microserviceBaseUrl + '/inventory';
+		request(endPoint, function (error, response, body) {
+
+			var bodyJson = JSON.parse(body);
+
+			if (!error && response.statusCode == 200) {
+				return res.json(bodyJson);
+			}else {
+				return res.send({"error":error});
 			}
-		];
-	  	return res.send(mockData);
 
-});
-
-// get list of sample documents
-app.get('/api/items',function(req, res){
-
-	var endPoint = microserviceBaseUrl + '/api/items';
-	request(endPoint, function (error, response, body) {
-
-		var bodyJson = JSON.parse(body);
-
-		if (!error && response.statusCode == 200) {
-    	//console.log(body);
-			return res.json(bodyJson);
-  	}else {
-  		return res.send({"error":error});
-  	}
-
-	});
-});
-
-// insert sample document
-app.post('/api/tasks', function (req, res){
-
-});
-
-
-// update a document
-app.get('/api/items/:id',function(req, res){
-
-	var endPoint = microserviceBaseUrl + '/api/items/' + req.params.id;
-	request(endPoint, function (error, response, body) {
-
-		var bodyJson = JSON.parse(body);
-
-		if (!error && response.statusCode == 200) {
-    	//console.log(body);
-			return res.json(bodyJson);
-  	}else {
-  		return res.send({"error":error});
-  	}
-
+		});
 	});
 
-});
+//	get item by id
+	app.get('/api/items/:id',function(req, res){
 
+		var endPoint = microserviceBaseUrl + '/inventory/' + req.params.id;
+		request(endPoint, function (error, response, body) {
 
-// delete a document
-app.delete('/api/task/list/:id',function(req, res){
+			var bodyJson = JSON.parse(body);
 
-  //return res.send(req.body);
-});
+			if (!error && response.statusCode == 200) {
+				return res.json(bodyJson);
+			} else {
+				return res.send({"error":error});
+			}
 
+		});
+	});
+
+//	get item by name
+	app.get('/api/items/name/:name',function(req, res){
+
+		var endPoint = microserviceBaseUrl + '/inventory/name/' + req.params.name;
+		request(endPoint, function (error, response, body) {
+
+			var bodyJson = JSON.parse(body);
+
+			if (!error && response.statusCode == 200) {
+				return res.json(bodyJson);
+			} else {
+				return res.send({"error":error});
+			}
+
+		});
+	});	
+
+//	get item by price
+	app.get('/api/items/price/:price',function(req, res){
+
+		var endPoint = microserviceBaseUrl + '/inventory/price/' + req.params.price;
+		request(endPoint, function (error, response, body) {
+
+			var bodyJson = JSON.parse(body);
+
+			if (!error && response.statusCode == 200) {
+				return res.json(bodyJson);
+			} else {
+				return res.send({"error":error});
+			}
+
+		});
+	});	
+	
+//	add item to inventory
+	app.post('/api/items/create', function (req, res){
+
+		var endPoint = microserviceBaseUrl + '/inventory/create';
+		//send request with json payload
+		request({
+			url: endPoint,
+			method: "POST",
+			json: req.body
+		}, function(error, response, body){
+
+			if (!error && response.statusCode == 200) {
+				return res.json(body);
+			} else {
+				return res.send({"error":error});
+			}		
+		});
+	});
+
+//	update a document
+	app.put('/api/items/update/:id',function(req, res){
+
+		var endPoint = microserviceBaseUrl + '/inventory/update/' + req.params.id;
+		//send request with json payload
+		request({
+			url: endPoint,
+			method: "PUT",
+			json: req.body
+		}, function(error, response, body){
+
+			if (!error && response.statusCode == 200) {
+				return res.json(body);
+			} else {
+				return res.send({"error":error});
+			}		
+		});
+	});
+
+//	delete item from inventory
+	app.delete('/api/items/delete/:id',function(req, res){
+
+		var endPoint = microserviceBaseUrl + '/inventory/delete/' + req.params.id;
+		request({url: endPoint, method: "DELETE"}, function (error, response, body) {
+
+			if (!error && response.statusCode == 200) {
+				return res.json(body);
+			} else {
+				return res.send({"error":error});
+			}
+		});
+	});
 };
