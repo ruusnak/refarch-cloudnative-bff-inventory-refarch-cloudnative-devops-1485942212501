@@ -36,10 +36,10 @@ The Node.js application is managed under the `inventory` folder.
 ## Available APIs
 
 - List all items in inventory `/api/items`
-- List item by id `/api/items/{id}`
-- List all items containing name  `/api/items/{name}`
-- List all items with price less than or equal to `/api/items/{price}`
-- Add item. Send json paylond with `POST` request to `/api/items/create`
+- List item by id. Send `GET` request to `/api/items/{id}`
+- List all items containing name. Send `GET` request to `/api/items//name/{name}`
+- List all items with price less than or equal to. Send `GET` request to `/api/items/price/{price}`
+- Add item. Send json paylond with `POST` request to `/api/items`
 - Update item by id. Send json payload with `PUT` request to `/api/items/update/{id}`
 - Delete item by id. Send `DELETE` request to `/api/items/delete/{id}` 
 
