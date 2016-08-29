@@ -27,12 +27,21 @@ The Node.js application is managed under the `inventory` folder.
 
   - Validate the local application
 
-  [http://localhost:3001/api/items/mock](http://localhost:3001/api/items/mock)
+  [http://localhost:3001/api/items/validate](http://localhost:3001/api/items/validate)
 
   If you have the backend microservices running, you can test the actual endpoint with:
 
   [http://localhost:3001/api/items](http://localhost:3001/api/items)
 
+## Available APIs
+
+- List all items in inventory `/api/items`
+- List item by id `/api/items/{id}`
+- List all items containing name  `/api/items/{name}`
+- List all items with price less than or equal to `/api/items/{price}`
+- Add item. Send json paylond with `POST` request to `/api/items/create`
+- Update item by id. Send json payload with `PUT` request to `/api/items/update/{id}`
+- Delete item by id. Send `DELETE` request to `/api/items/delete/{id}` 
 
 ## Deploy to Bluemix Cloud Foundry runtime:
 

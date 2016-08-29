@@ -42,7 +42,7 @@ module.exports = function(app, request) {
 		});
 	});
 
-//	get item by name
+//	get items containing name
 	app.get('/api/items/name/:name',function(req, res){
 
 		var endPoint = microserviceBaseUrl + '/inventory/name/' + req.params.name;
@@ -59,7 +59,7 @@ module.exports = function(app, request) {
 		});
 	});	
 
-//	get item by price
+//	get items with price less than or equal to
 	app.get('/api/items/price/:price',function(req, res){
 
 		var endPoint = microserviceBaseUrl + '/inventory/price/' + req.params.price;
@@ -95,7 +95,7 @@ module.exports = function(app, request) {
 		});
 	});
 
-//	update a document
+//	update item by id
 	app.put('/api/items/update/:id',function(req, res){
 
 		var endPoint = microserviceBaseUrl + '/inventory/update/' + req.params.id;
