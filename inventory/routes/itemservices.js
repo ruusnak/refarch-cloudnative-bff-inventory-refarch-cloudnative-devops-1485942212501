@@ -77,9 +77,9 @@ module.exports = function(app, request) {
 	});	
 	
 //	add item to inventory
-	app.post('/api/items/create', function (req, res){
+	app.post('/api/items', function (req, res){
 
-		var endPoint = microserviceBaseUrl + '/inventory/create';
+		var endPoint = microserviceBaseUrl + '/inventory';
 		//send request with json payload
 		request({
 			url: endPoint,
