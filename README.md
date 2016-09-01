@@ -5,23 +5,25 @@ https://github.com/ibm-cloud-architecture/refarch-cloudnative*
 
 This project sits between the API gateway and the backend inventory microservices. It is built with Node.js Express and request framework with following functionality:
 
- - Implement the Inventory API managed by IBM API connect
- - Invoke the backend microservices component
+ - Route requests to backend Inventory microservice over Netflix Zuul.
  - Serve the application images
  - Augment the JSON data payload for Mobile and Web client
 
 The Node.js application is managed under the `inventory` folder.
 
+This application depends on Netflix Zuul service to be operational and routing to the backend Inventory microservice.
+
+Line 4 in `routes/itemservices.js` has a variable definition pointing to the URL of Zuul service. Edit this file and change value for `microserviceBaseUrl` to point to your Zuul service.
+
 ## Run the application locally:
 
  - Run the application:
 
-  `$ cd inventory`
-
-  `npm install`
-
-  `npm start`
-
+    ```
+    # cd inventory
+    # npm install
+    # npm start
+    ```
 
   This will start the application on port 3001.
 
@@ -29,13 +31,12 @@ The Node.js application is managed under the `inventory` folder.
 
   [http://localhost:3001/api/items/validate](http://localhost:3001/api/items/validate)
 
-  If you have the backend microservices running, you can test the actual endpoint with:
-
+  To test the actual endpoint with backend services
   [http://localhost:3001/api/items](http://localhost:3001/api/items)
 
 ## Available APIs
 
-- List all items in inventory `/api/items`
+- List all items in inventory. Send `GET` request to `/api/items`
 - List item by id. Send `GET` request to `/api/items/{id}`
 - List all items containing name. Send `GET` request to `/api/items//name/{name}`
 - List all items with price less than or equal to. Send `GET` request to `/api/items/price/{price}`
@@ -45,6 +46,18 @@ The Node.js application is managed under the `inventory` folder.
 
 ## Deploy to Bluemix Cloud Foundry runtime:
 
-Update the manifest.yml file for a proper Bluemix hostname, then issue following command to deploy application to Bluemix:
+1. Create Auto-Scaling service. `manifest.yml` has Auto-Scaling service name set to `cloudnative-autoscale`. If you have an existing Auto-Scaling service with a different name, then edit manifest.yml to update the service name. 
 
-   `cf push`
+    To create a new Auto-Scaling service with name used in manifest.yml, use the following command.
+    ```
+    # cf create-service Auto-Scaling free cloudnative-autoscale
+    ```
+
+2. Set Cloud Foundry application name. `manifest.yml` has the application and host names set to `inventory-bff-app`. You can leave the name as-is or change it. Now, deploy the application.
+    ```
+    # cf push
+    ```
+
+3. Validate the Cloud Foundry application. [http://inventory-bff-app.mybluemix.net/api/items/validate](http://inventory-bff-app.mybluemix.net/api/items/validate)
+
+This completes deployment of the application to Bluemix Cloud Foundry runtime.

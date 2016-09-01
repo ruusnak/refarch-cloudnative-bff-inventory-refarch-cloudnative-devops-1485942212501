@@ -1,7 +1,7 @@
 module.exports = function(app, request) {
 
 	var resJson = [];
-	var microserviceBaseUrl = "http://localhost:8080/micro";
+	var microserviceBaseUrl = "http://microservices-refapp-zuul-chrisking.mybluemix.net/inventory-microservice/micro";
 
 //	validation check
 	app.get('/api/items/validate',function(req, res){
@@ -57,7 +57,7 @@ module.exports = function(app, request) {
 			}
 
 		});
-	});	
+	});
 
 //	get items with price less than or equal to
 	app.get('/api/items/price/:price',function(req, res){
@@ -74,8 +74,8 @@ module.exports = function(app, request) {
 			}
 
 		});
-	});	
-	
+	});
+
 //	add item to inventory
 	app.post('/api/items', function (req, res){
 
@@ -91,7 +91,7 @@ module.exports = function(app, request) {
 				return res.json(body);
 			} else {
 				return res.send({"error":error});
-			}		
+			}
 		});
 	});
 
@@ -110,7 +110,7 @@ module.exports = function(app, request) {
 				return res.json(body);
 			} else {
 				return res.send({"error":error});
-			}		
+			}
 		});
 	});
 

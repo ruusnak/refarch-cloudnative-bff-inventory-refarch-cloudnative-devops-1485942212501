@@ -6,3 +6,5 @@ applications:
   name: inventory-bff-app
   host: inventory-bff-app
   disk_quota: 1024M
+  services:
+  - cloudnative-autoscale

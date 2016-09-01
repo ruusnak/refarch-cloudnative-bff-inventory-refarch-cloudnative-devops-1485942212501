@@ -6,6 +6,7 @@ var fs = require('fs');
 //cfenv provides access to your Cloud Foundry environment
 //for more info, see: https://www.npmjs.com/package/cfenv
 var cfenv = require('cfenv');
+var agent = require('bluemix-autoscaling-agent');
 var bodyParser = require('body-parser');
 var router = express.Router();
 
