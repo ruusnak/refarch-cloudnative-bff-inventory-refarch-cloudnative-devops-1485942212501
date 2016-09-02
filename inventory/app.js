@@ -6,7 +6,6 @@ var fs = require('fs');
 //cfenv provides access to your Cloud Foundry environment
 //for more info, see: https://www.npmjs.com/package/cfenv
 var cfenv = require('cfenv');
-var agent = require('bluemix-autoscaling-agent');
 var bodyParser = require('body-parser');
 var router = express.Router();
 
@@ -20,6 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 if (process.env.VCAP_SERVICES) {
 	// Running on Bluemix. Parse for  the port and host that we've been assigned.
+        var agent = require('bluemix-autoscaling-agent');
 	var env = JSON.parse(process.env.VCAP_SERVICES);
 	var host = process.env.VCAP_APP_HOST;
 	var port = process.env.VCAP_APP_PORT;
