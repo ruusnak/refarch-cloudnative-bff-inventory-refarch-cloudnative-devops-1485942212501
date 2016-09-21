@@ -13,14 +13,21 @@ The Node.js application is managed under the `inventory` folder.
 
 This application depends on Netflix Zuul service to be operational and routing to the backend Inventory microservice.
 
-Line 4 in `routes/itemservices.js` has a variable definition pointing to the URL of Zuul service. Edit this file and change value for `microserviceBaseUrl` to point to your Zuul service.
+Routes to microservice URIs are defined in `routes/itemservices.js`. Run following command to set microservice base URL to Zuul proxy URL.
+
+```
+# cd inventory
+# /bin/bash set-zuul-proxy-url.sh [-m <microservice-app-name> -c <context-path>] -z <zuul-cluster-url>
+   
+  defaults: -m inventory-microservice -c micro
+```
+
 
 ## Run the application locally:
 
  - Run the application:
 
     ```
-    # cd inventory
     # npm install
     # npm start
     ```
