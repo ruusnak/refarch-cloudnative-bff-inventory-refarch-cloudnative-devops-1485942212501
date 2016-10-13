@@ -22,7 +22,7 @@ esac
 shift
 done
 
-ZUULPROXY="http://${ZUUL_FQDN}/${MICROSERVICE_NAME}/${CONTEXT_PATH}"
+ZUULPROXY="https://${ZUUL_FQDN}/${MICROSERVICE_NAME}/${CONTEXT_PATH}"
 echo "Zuul Proxy URL: $ZUULPROXY"
 sed -i -e "s|\(var microserviceBaseUrl =\)\(.*http:\/\/\)\(.*\)\(;$\)|\1 \"$ZUULPROXY\"\4|" routes/itemservices.js >/dev/null
 cat routes/itemservices.js|grep -m1 microserviceBaseUrl
