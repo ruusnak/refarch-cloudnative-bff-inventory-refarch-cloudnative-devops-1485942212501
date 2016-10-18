@@ -1,7 +1,7 @@
 module.exports = function(app, request) {
 
 	var resJson = [];
-	var microserviceBaseUrl = "http://microservices-refapp-zuul-chrisking.mybluemix.net/inventory-microservice/micro";
+	var microserviceBaseUrl = "https://netflix-zuul-cloudnative-dev.mybluemix.net/inventory-microservice/micro";
 
 //	validation check
 	app.get('/api/items/validate',function(req, res){
@@ -17,7 +17,7 @@ module.exports = function(app, request) {
 			url: endPoint,
 			method: "GET",
 			headers: {
-    		'Authorization': req.headers['Authorization']
+    		'Authorization': req.get('Authorization')
   		}
 		}, function (error, response, body) {
 
@@ -40,7 +40,7 @@ module.exports = function(app, request) {
 			url: endPoint,
 			method: "GET",
 			headers: {
-    		'Authorization': req.headers['Authorization']
+    		'Authorization': req.get('Authorization')
   		}
 		}, function (error, response, body) {
 
@@ -63,7 +63,7 @@ module.exports = function(app, request) {
 			url: endPoint,
 			method: "GET",
 			headers: {
-    		'Authorization': req.headers['Authorization']
+    		'Authorization': req.get('Authorization')
   		}
 		}, function (error, response, body) {
 
@@ -86,7 +86,7 @@ module.exports = function(app, request) {
 			url: endPoint,
 			method: "GET",
 			headers: {
-    		'Authorization': req.headers['Authorization']
+    		'Authorization': req.get('Authorization')
   		}
 		}, function (error, response, body) {
 
@@ -110,7 +110,7 @@ module.exports = function(app, request) {
 			url: endPoint,
 			method: "POST",
 			headers: {
-    		'Authorization': req.headers['Authorization']
+    		'Authorization': req.get('Authorization')
   		},
 			json: req.body
 		}, function(error, response, body){
@@ -132,7 +132,7 @@ module.exports = function(app, request) {
 			url: endPoint,
 			method: "PUT",
 			headers: {
-    		'Authorization': req.headers['Authorization']
+    		'Authorization': req.get('Authorization')
   		},
 			json: req.body
 		}, function(error, response, body){
@@ -152,7 +152,7 @@ module.exports = function(app, request) {
 		request({url: endPoint,
 							method: "DELETE",
 							headers: {
-				    		'Authorization': req.headers['Authorization']
+				    		'Authorization': req.get('Authorization')
 				  		}
 						}, function (error, response, body) {
 
