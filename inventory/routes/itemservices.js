@@ -1,18 +1,25 @@
 module.exports = function(app, request) {
 
 	var resJson = [];
-	var microserviceBaseUrl = "http://microservices-refapp-zuul-chrisking.mybluemix.net/inventory-microservice/micro";
+	var microserviceBaseUrl = "https://netflix-zuul-cloudnative-dev.mybluemix.net/inventory-microservice/micro";
 
 //	validation check
 	app.get('/api/items/validate',function(req, res){
 		return res.send("validation successful!");
 	});
 
+
 //	get list of items in inventory
 	app.get('/api/items',function(req, res){
 
 		var endPoint = microserviceBaseUrl + '/inventory';
-		request(endPoint, function (error, response, body) {
+		request({
+			url: endPoint,
+			method: "GET",
+			headers: {
+    		'Authorization': req.get('Authorization')
+  		}
+		}, function (error, response, body) {
 
 			var bodyJson = JSON.parse(body);
 
@@ -29,7 +36,13 @@ module.exports = function(app, request) {
 	app.get('/api/items/:id',function(req, res){
 
 		var endPoint = microserviceBaseUrl + '/inventory/' + req.params.id;
-		request(endPoint, function (error, response, body) {
+		request({
+			url: endPoint,
+			method: "GET",
+			headers: {
+    		'Authorization': req.get('Authorization')
+  		}
+		}, function (error, response, body) {
 
 			var bodyJson = JSON.parse(body);
 
@@ -46,7 +59,13 @@ module.exports = function(app, request) {
 	app.get('/api/items/name/:name',function(req, res){
 
 		var endPoint = microserviceBaseUrl + '/inventory/name/' + req.params.name;
-		request(endPoint, function (error, response, body) {
+		request({
+			url: endPoint,
+			method: "GET",
+			headers: {
+    		'Authorization': req.get('Authorization')
+  		}
+		}, function (error, response, body) {
 
 			var bodyJson = JSON.parse(body);
 
@@ -63,7 +82,13 @@ module.exports = function(app, request) {
 	app.get('/api/items/price/:price',function(req, res){
 
 		var endPoint = microserviceBaseUrl + '/inventory/price/' + req.params.price;
-		request(endPoint, function (error, response, body) {
+		request({
+			url: endPoint,
+			method: "GET",
+			headers: {
+    		'Authorization': req.get('Authorization')
+  		}
+		}, function (error, response, body) {
 
 			var bodyJson = JSON.parse(body);
 
@@ -84,6 +109,9 @@ module.exports = function(app, request) {
 		request({
 			url: endPoint,
 			method: "POST",
+			headers: {
+    		'Authorization': req.get('Authorization')
+  		},
 			json: req.body
 		}, function(error, response, body){
 
@@ -103,6 +131,9 @@ module.exports = function(app, request) {
 		request({
 			url: endPoint,
 			method: "PUT",
+			headers: {
+    		'Authorization': req.get('Authorization')
+  		},
 			json: req.body
 		}, function(error, response, body){
 
@@ -118,7 +149,12 @@ module.exports = function(app, request) {
 	app.delete('/api/items/delete/:id',function(req, res){
 
 		var endPoint = microserviceBaseUrl + '/inventory/delete/' + req.params.id;
-		request({url: endPoint, method: "DELETE"}, function (error, response, body) {
+		request({url: endPoint,
+							method: "DELETE",
+							headers: {
+				    		'Authorization': req.get('Authorization')
+				  		}
+						}, function (error, response, body) {
 
 			if (!error && response.statusCode == 200) {
 				return res.json(body);
