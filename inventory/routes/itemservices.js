@@ -20,7 +20,9 @@ module.exports = function(app, request) {
     		'Authorization': req.get('Authorization')
   		}
 		}, function (error, response, body) {
-
+            if (0 === body.length) {
+                return res.send({"error":"no items in inventory"});
+            }
 			var bodyJson = JSON.parse(body);
 
 			if (!error && response.statusCode == 200) {
@@ -43,7 +45,9 @@ module.exports = function(app, request) {
     		'Authorization': req.get('Authorization')
   		}
 		}, function (error, response, body) {
-
+            if (0 === body.length) {
+                return res.send({"error":"item not found"});
+            }
 			var bodyJson = JSON.parse(body);
 
 			if (!error && response.statusCode == 200) {
